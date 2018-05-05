@@ -1,0 +1,92 @@
+﻿@*@model MovieRental2.Models.Users*@
+@using Microsoft.Security.Application
+@using MovieRental2.Models
+@model MultipleModelsView
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+
+<div id="main_login">
+    <div>
+        <h2>Login</h2>
+
+        @using (Html.BeginForm("Authenticate", "Login", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>User Name:</td>
+                   
+                    <td> @Html.TextBoxFor(m => m.usersModel.UserName)</td> @*@Ajax.JavaScriptStringEncode(ViewBag.Username);*@
+                    <td><div style="color:red">@Html.ValidationMessageFor(x => x.usersModel.UserName)</div></td>
+                </tr>
+
+                <tr>
+                    <td>Password:</td>
+                    <td>@Html.PasswordFor(m => m.usersModel.Password)</td>
+                    <td><div style="color:red">@Html.ValidationMessageFor(x => x.usersModel.Password)</div></td>
+                </tr>
+
+
+            </table>
+
+            <input id="Submit1" type="submit" value="Login" />
+
+
+            <div style="color:Red"> @ViewBag.result </div>
+            <br />
+            <span>* Example Enter Username=test ,Password=test </span>
+            <br />
+            <span>** For Admin Page, Enter Username=admin ,Password=admin </span>
+            @*@Html.ActionLink(" To Registration", "Registration")*@
+        }
+    </div>
+
+
+
+    <div id="main_SignUp">
+        <h2>Sign Up</h2>
+
+        @using (Html.BeginForm("Registation", "Login", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>User Name:</td>
+                    <td>@Html.TextBoxFor(m => m.registrationModel.UserName)</td> @*@Ajax.JavaScriptStringEncode(ViewBag.Username);*@
+                    <td><div style="color:red">@Html.ValidationMessageFor(x => x.registrationModel.UserName)</div></td>
+                </tr>
+
+                <tr>
+                    <td>Password:</td>
+                    <td>@Html.PasswordFor(m => m.registrationModel.Password, htmlAttributes: new { name = "pass" })</td>
+                    <td><div style="color:red">@Html.ValidationMessageFor(x => x.registrationModel.Password)</div></td>
+                </tr>
+                <tr>
+                    <td>CofirmPassword</td>
+                    <td>@Html.PasswordFor(m => m.registrationModel.CofirmPassword)</td>
+                    <td><div style="color:red">@Html.ValidationMessageFor(x => x.registrationModel.CofirmPassword)</div></td>
+
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>@Html.TextBoxFor(m => m.registrationModel.Email)</td>
+                    <td><div style="color:red">@Html.ValidationMessageFor(x => x.registrationModel.Email)</div></td>
+                </tr>
+
+
+            </table>
+
+            <input id="Submit2" type="submit" value="Sign Up" name="submit2" />
+
+            <div style="color:green"> @ViewBag.Message </div>
+
+
+        }
+    </div>
+</div>
+<div id="imageMOVIE">
+
+    <img src="~/Content/Images/MOVIE.jpg" alt="MOVIE">
+</div>

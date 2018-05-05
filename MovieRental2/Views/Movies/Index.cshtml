@@ -1,0 +1,130 @@
+﻿@model IEnumerable<MovieRental2.Models.Movies>
+
+@{
+    ViewBag.Title = "Movie List";
+}
+@*<span>id User =</span>
+    @Session["UserId"]*@
+<br />
+Hi, @Session["UserName"] !
+<br />
+@DateTime.Now.ToString()
+
+<h2>Movie List</h2>
+
+<main>
+
+    <div class='search_text'>
+
+        <input id="searchInput" placeholder='Search Name Of Movie' />
+    </div>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+            $("#searchInput").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetSearchValue","Movies")',
+                        dataType: "json",
+                        data: { search: $("#searchInput").val() },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+
+                                return { label: item.Name, value: item.Name};
+
+                           })
+                            );
+                        },
+                       
+
+                        error: function (xhr, status, error) {
+                            alert("Error");
+                        }
+                    });
+                }
+        });
+        </script>
+        
+
+    @*<script>
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+            $("#searchInput").keyup(function () {
+                var searchText = $("#searchInput").val().toLowerCase();
+                $("#trItem").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) { //different hide
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+
+
+        });
+    </script>*@
+    
+
+    <p>
+        @Html.ActionLink("Your Orders List", "index", "Orders")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GenreId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+        
+        <tr id="trItem">
+
+            <td id="imgMovie">
+                <img src="@Url.Content( @item.Image)" alt="Image Movie" />
+            </td>
+            <td class="item">
+                @Html.DisplayFor(modelItem => item.GenreId)
+            </td>
+            <td class="itemName">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="itemDescription">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            
+                <td class="itemName">
+                    @Html.DisplayFor(modelItem => item.Price)$
+                </td>
+               
+                <td class="item" id="btnAdd">
+                    @Html.ActionLink("Add", "Add", new { id = item.MovieId })
+                </td>
+
+        </tr>
+        
+            }
+
+    </table>
+
+
+</main>
