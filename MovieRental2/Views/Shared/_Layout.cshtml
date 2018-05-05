@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Movie Rental</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/MovieRentalStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <p id="Rental_Movie">Rental Movie</p>
+
+            </div>
+           
+            @{
+                var test = Session["UserId"];
+                var admin = Session["UserName"];
+                if (test != null ||admin != null)
+                {
+                    
+               <div id="btnLogout"> @Html.ActionLink(" Logout", "Logout", "Login")</div>
+
+                    if (test != null)
+                    {
+               <a href="@Url.Action("Index", "Orders")">
+
+
+
+                   <img src="~/Content/Images/cart.jpg" alt="Cart">
+                   <div style="color:cornflowerblue;float:left;margin: 14px 0px 0px 20px;">Cart(@Session["Cart"])</div>
+               </a>
+                    }
+
+                    }
+                    else
+                    {
+                        // return RedirectToAction("Index", "Movies");
+                    }
+                }
+
+
+
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav"></ul>
+                </div>
+            </div>
+    </div>
+    
+    <div class="container body-content">
+        @RenderBody()
+        
+        <footer>
+            
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Contact us</a></li>
+                <li><a href="#">Advertising</a></li>
+                <li><a href="#">Terms of Use</a></li>
+            </ul>
+            <p>&copy; @DateTime.Now.Year -  Movie Rental</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
